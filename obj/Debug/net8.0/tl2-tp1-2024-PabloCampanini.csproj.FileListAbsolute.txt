@@ -1,0 +1,14 @@
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\bin\Debug\net8.0\tl2-tp1-2024-PabloCampanini.exe
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\bin\Debug\net8.0\tl2-tp1-2024-PabloCampanini.deps.json
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\bin\Debug\net8.0\tl2-tp1-2024-PabloCampanini.runtimeconfig.json
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\bin\Debug\net8.0\tl2-tp1-2024-PabloCampanini.dll
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\bin\Debug\net8.0\tl2-tp1-2024-PabloCampanini.pdb
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.AssemblyInfoInputs.cache
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.AssemblyInfo.cs
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.csproj.CoreCompileInputs.cache
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.dll
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\refint\tl2-tp1-2024-PabloCampanini.dll
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.pdb
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\tl2-tp1-2024-PabloCampanini.genruntimeconfig.cache
+C:\Users\pablo\Desktop\tl2-tp1-2024-PabloCampanini\obj\Debug\net8.0\ref\tl2-tp1-2024-PabloCampanini.dll
