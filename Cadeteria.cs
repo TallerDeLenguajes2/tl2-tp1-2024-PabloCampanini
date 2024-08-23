@@ -25,15 +25,15 @@ public class Pedido
     private Cliente cliente;
     private EstdadoPedidos estado;
 
-    public Pedido()
-    {
-        
-    }
-
     public int Numero { get => numero; set => numero = value; }
     public string Observacion { get => observacion; set => observacion = value; }
     public Cliente Cliente { get => cliente; set => cliente = value; }
     public EstdadoPedidos Estado { get => estado; set => estado = value; }
+
+    public Pedido()
+    {
+        cliente = new Cliente();
+    }
 
     public void VerDireccionCliente()
     {
@@ -64,13 +64,27 @@ public class Cadete
     {
 
     }
+
+    public void TomarPedido(Pedido pedido)
+    {
+        Pedidos.Add(pedido);
+    }
 }
 
 public class Cadeteria
 {
     private string nombre;
     private string telefono;
-    private List<Cadete> cadetes = new List<Cadete>();
+    private List<Cadete> cadetes;
 
+    
+    public string Nombre { get => nombre; set => nombre = value; }
+    public string Telefono { get => telefono; set => telefono = value; }
+    public List<Cadete> Cadetes { get => cadetes; set => cadetes = value; }
+
+    public Cadeteria()
+    {
+        Cadetes = new List<Cadete>();
+    }
 
 }
