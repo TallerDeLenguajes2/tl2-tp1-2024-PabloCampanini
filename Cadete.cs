@@ -12,13 +12,18 @@ public class Cadete
     public string Telefono { get => telefono; set => telefono = value; }
     public List<Pedido> Pedidos { get => pedidos; set => pedidos = value; }
 
-    public void JornalACobrar()
+    public float JornalACobrar()
     {
-
+        return Pedidos.Count() * 500;
     }
 
     public void TomarPedido(Pedido pedido)
     {
         Pedidos.Add(pedido);
+    }
+
+    public void EntregarPedido()
+    {
+        Pedidos.Remove(Pedidos[0]);
     }
 }

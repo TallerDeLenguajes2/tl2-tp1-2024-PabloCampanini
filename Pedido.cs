@@ -1,3 +1,5 @@
+using System.Threading.Tasks.Dataflow;
+
 public class Pedido
 {
     private int numero;
@@ -17,11 +19,14 @@ public class Pedido
 
     public void VerDireccionCliente()
     {
-
+        Console.WriteLine(Cliente.Direccion);
     }
 
     public void VerDatosCliente()
     {
-
+        Console.WriteLine(Cliente.Nombre);
+        Console.WriteLine(Cliente.Telefono);
+        Console.WriteLine(Cliente.DatosReferenciaDireccion);
+        VerDireccionCliente();
     }
 }
