@@ -6,4 +6,8 @@
 
 - A la clase cadete le añadiría los métodos TomarPedido y EntregarPedido. Para la clase cadeteria le añadiría los métodos ContratarCadete, DespedirCadete y  PagarJornal.
 
-- 
+- Los atributos privados serian Nombre, Dirección, Teléfono y DatosReferenciaDireccion de la clase Cliente. Nro, Obs, Cliente y Estado de la clase Pedidos. Id, Nombre, Dirección, Teléfono y ListadoPedidos de la clase Cadete. Nombre, Teléfono y ListadoCadetes de la clase Cadetería. Por otro lados las propiedades y los métodos propuestos deben ser públicas, las propiedades para podes acceder a los campos/atributos privados y los métodos para poder usarlos fuera de las clases.
+
+- Los constructores de las clases Pedidos y Cadeteria deben contener las nuevas instancias de las clases Cliente y Cadete para tener la dependencia de composición. Las clases de Cliente y Cadete pueden tener sus respectivos constructores vacíos como vienen por defecto.
+
+- Otro diseño posible es que la clase Cadeteria tenga la lista de pedidos para poder repartir entre los diferentes cadetes.
