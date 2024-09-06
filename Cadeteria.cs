@@ -4,6 +4,7 @@ public class Cadeteria
     private string nombre;
     private string telefono;
     private List<Cadete> cadetes;
+    private Random random = new Random();
 
     
     public string Nombre { get => nombre; set => nombre = value; }
@@ -37,6 +38,38 @@ public class Cadeteria
         foreach (var Cadete in Cadetes)
         {
             Console.WriteLine($"Pago cadete ID = {Cadete.Id} -----> Nombre = {Cadete.Nombre} *-----* Pago = ${Cadete.JornalACobrar()}");
+        }
+    }
+
+    public Pedido AltaPedido(int NumeroPedido)
+    {
+        Pedido NuevoPedido = new Pedido();
+
+        Console.WriteLine("\nIngrese los datos del pedido: ");
+
+        NuevoPedido.Numero = NumeroPedido;
+        Console.WriteLine($"\n\tObservaciones del pedido: {NuevoPedido.Observacion = Console.ReadLine()}");
+
+        Console.WriteLine("\nIngrese los datos del cliente: ");
+        Console.WriteLine($"\n\tNombre: {NuevoPedido.Cliente.Nombre = Console.ReadLine()}");
+        Console.WriteLine($"\tDireccion: {NuevoPedido.Cliente.Direccion = Console.ReadLine()}");
+        Console.WriteLine($"\tTelefono: {NuevoPedido.Cliente.Telefono = Console.ReadLine()}");
+        Console.WriteLine($"\tReferencias al domicilio: {NuevoPedido.Cliente.DatosReferenciaDireccion = Console.ReadLine()}");
+        
+
+        return NuevoPedido;
+    }
+
+    public void AsignarPedido(Pedido PedidoParaAsignar)
+    {
+        int IdAleatorio = random.Next(10, 10 + Cadetes.Count);
+
+        foreach (var cadete in Cadetes)
+        {
+            if(cadete.Id == IdAleatorio)
+            {
+                cadete.TomarPedido(PedidoParaAsignar);
+            }
         }
     }
 }

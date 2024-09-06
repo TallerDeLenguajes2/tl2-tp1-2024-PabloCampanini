@@ -1,10 +1,6 @@
 public class ManejoDeArchivos
 {
-    private List<string[]> listaArreglo;
-
-    public List<string[]> ListaArreglo { get => listaArreglo; set => listaArreglo = value; }
-
-    public void LecturaDeArchivos(string NombreArchivo)
+    public void LecturaDeArchivos(string NombreArchivo, List<string[]> ListaArreglo)
     {
         using (StreamReader sr = new StreamReader(NombreArchivo + ".csv"))   //Cargo el archivo csv usando StreamReader
         {
