@@ -9,7 +9,7 @@ public class Cadeteria
     
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
-    public List<Cadete> Cadetes { get => cadetes; set => cadetes = value; }
+    // public List<Cadete> Cadetes { get => cadetes; set => cadetes = value; }
 
     public Cadeteria()
     {
@@ -70,6 +70,14 @@ public class Cadeteria
             {
                 cadete.TomarPedido(PedidoParaAsignar);
             }
+        }
+    }
+
+    public void CambiarEstadoPedido(int NumeroPedidoBuscado)
+    {
+        foreach (var cadete in cadetes)
+        {
+            cadete.CambiarEstadoPedido(NumeroPedidoBuscado);
         }
     }
 }

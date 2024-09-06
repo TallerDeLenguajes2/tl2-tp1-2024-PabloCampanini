@@ -26,9 +26,9 @@ foreach (var arregloDatos in ListaDatosCadetes)
     Cadete cadete = new Cadete();
 
     cadete.Id = ID;
-    cadete.Nombre = arregloDatos[0];
-    cadete.Direccion = arregloDatos[1];
-    cadete.Telefono = arregloDatos[2];
+    cadete.Nombre = arregloDatos[0].Trim();
+    cadete.Direccion = arregloDatos[1].Trim();
+    cadete.Telefono = arregloDatos[2].Trim();
 
     cadeteria.Cadetes.Add(cadete);
 
