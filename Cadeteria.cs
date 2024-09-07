@@ -9,25 +9,24 @@ public class Cadeteria
     
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
-    // public List<Cadete> Cadetes { get => cadetes; set => cadetes = value; }
 
     public Cadeteria()
     {
-        Cadetes = new List<Cadete>();
+        cadetes = new List<Cadete>();
     }
 
     public void ContratarCadete(Cadete NuevoCadete)
     {
-        Cadetes.Add(NuevoCadete);
+        cadetes.Add(NuevoCadete);
     }
 
     public void DespedirCadete(int ID)
     {
-        foreach (var Cadete in Cadetes)
+        foreach (var Cadete in cadetes)
         {   
             if (Cadete.Id == ID)
             {
-                Cadetes.Remove(Cadete);
+                cadetes.Remove(Cadete);
             }
             
         }
@@ -35,7 +34,7 @@ public class Cadeteria
 
     public void PagarJornal()
     {
-        foreach (var Cadete in Cadetes)
+        foreach (var Cadete in cadetes)
         {
             Console.WriteLine($"Pago cadete ID = {Cadete.Id} -----> Nombre = {Cadete.Nombre} *-----* Pago = ${Cadete.JornalACobrar()}");
         }
@@ -62,9 +61,9 @@ public class Cadeteria
 
     public void AsignarPedido(Pedido PedidoParaAsignar)
     {
-        int IdAleatorio = random.Next(10, 10 + Cadetes.Count);
+        int IdAleatorio = random.Next(10, 10 + cadetes.Count);
 
-        foreach (var cadete in Cadetes)
+        foreach (var cadete in cadetes)
         {
             if(cadete.Id == IdAleatorio)
             {

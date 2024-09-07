@@ -30,7 +30,7 @@ foreach (var arregloDatos in ListaDatosCadetes)
     cadete.Direccion = arregloDatos[1].Trim();
     cadete.Telefono = arregloDatos[2].Trim();
 
-    cadeteria.Cadetes.Add(cadete);
+    cadeteria.ContratarCadete(cadete);
 
     ID++;
 }
