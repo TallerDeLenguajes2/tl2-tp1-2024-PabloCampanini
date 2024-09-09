@@ -43,16 +43,17 @@ foreach (var arregloDatos in ListaDatosCadeteria)
 
 Console.WriteLine("\n\n\t\t*----- MENU CADETERIA -----*\n\n");
 
-Console.WriteLine("BIENVENIDO CADETERIA MOTOEXPRESS: ");
+Console.WriteLine($"BIENVENIDO CADETERIA {cadeteria.Nombre}: ");
 
 
 while (!ControlMenu)
 {
-
     Console.WriteLine("\n\t1 - Dar alta pedido\n\t2 - Asignar pedido a cadete");
-    Console.WriteLine("\n\t3 - Cambiar estado de pedido\n\t4 - Reasignar pedido a otro cadete\n\n\t5 - Salir");
+    Console.WriteLine("\t3 - Cambiar estado de pedido\n\t4 - Reasignar pedido a otro cadete\n\t5 - Pagar cadetes");
+    Console.WriteLine("\n\t6 - Salir");
 
-    Console.WriteLine($"Elija la operacion que quiere realizar: {Menu = Console.ReadLine()}");
+    Console.Write("Elija la operacion que quiere realizar: ");
+    Menu = Console.ReadLine();
 
     switch (Menu)
     {
@@ -72,7 +73,8 @@ while (!ControlMenu)
             break;
         case "3":
             string cambiarEstado;
-            Console.WriteLine($"Ingrese el numero de pedido: {cambiarEstado = Console.ReadLine()}");
+            Console.Write("Ingrese el numero de pedido: ");
+            cambiarEstado = Console.ReadLine();
 
             if (int.TryParse(cambiarEstado, out int PedidoDebeCambiar))
             {
@@ -81,7 +83,8 @@ while (!ControlMenu)
             break;
         case "4":
             string reasignarPedido;
-            Console.WriteLine($"Ingrese el numero de pedido: {reasignarPedido = Console.ReadLine()}");
+            Console.WriteLine("Ingrese el numero de pedido: ");
+            reasignarPedido = Console.ReadLine();
 
             if (int.TryParse(reasignarPedido, out int PedidoParaReasignar))
             {
@@ -89,7 +92,10 @@ while (!ControlMenu)
             }
             break;
         case "5":
-            
+            cadeteria.PagarJornal();
+            break;
+        case "6":
+            cadeteria.GenerarInforme();
             ControlMenu = true;
             break;
         default:

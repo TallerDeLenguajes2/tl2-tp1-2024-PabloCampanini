@@ -4,18 +4,24 @@ public class Cadete
     private string nombre;
     private string direccion;
     private string telefono;
-    private List<Pedido> pedidos = new List<Pedido>();
+    private List<Pedido> pedidos;
+    private List<Pedido> pedidosEntregados;
     private Random random = new Random();
+
+    public Cadete()
+    {
+        pedidos = new List<Pedido>();
+        pedidosEntregados = new List<Pedido>();
+    }
 
     public int Id { get => id; set => id = value; }
     public string Nombre { get => nombre; set => nombre = value; }
     public string Direccion { get => direccion; set => direccion = value; }
     public string Telefono { get => telefono; set => telefono = value; }
-    // public List<Pedido> Pedidos { get => pedidos; set => pedidos = value; }
 
     public float JornalACobrar()
     {
-        return pedidos.Count() * 500;
+        return pedidosEntregados.Count() * 500;
     }
 
     public void TomarPedido(Pedido pedido)
@@ -25,17 +31,25 @@ public class Cadete
 
     public void EntregarPedido()
     {
-        pedidos.Remove(pedidos[0]);
+        pedidosEntregados.Add(pedidos[0]);
 
+        pedidos.Remove(pedidos[0]);
     }
 
     public bool CambiarEstadoPedido(int NumeroPedidoBuscado)
     {
-        foreach (var pedido in pedidos)
+        for (int i = 0; i < pedidos.Count; i++)
         {
-            if (pedido.Numero == NumeroPedidoBuscado)
+            if (pedidos[i].Numero == NumeroPedidoBuscado)
             {
-                pedido.Estado = (EstadoPedidos)random.Next(0, 6);
+                pedidos[i].Estado = (EstadoPedidos)random.Next(0, 5);
+
+                if (pedidos[i].Estado == (EstadoPedidos)4)
+                {
+                    pedidosEntregados.Add(pedidos[i]);
+
+                    pedidos.Remove(pedidos[i]);
+                }
 
                 return true;
             }

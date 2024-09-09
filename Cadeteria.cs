@@ -36,7 +36,7 @@ public class Cadeteria
     {
         foreach (var Cadete in cadetes)
         {
-            Console.WriteLine($"Pago cadete ID = {Cadete.Id} -----> Nombre = {Cadete.Nombre} *-----* Pago = ${Cadete.JornalACobrar()}");
+            Console.WriteLine($"\n\nPago cadete ID = {Cadete.Id} \n\t-----> Nombre = {Cadete.Nombre} *-----* Pago = ${Cadete.JornalACobrar()}");
         }
     }
 
@@ -44,16 +44,25 @@ public class Cadeteria
     {
         Pedido NuevoPedido = new Pedido();
 
-        Console.WriteLine("\nIngrese los datos del pedido: ");
-
         NuevoPedido.Numero = NumeroPedido;
-        Console.WriteLine($"\n\tObservaciones del pedido: {NuevoPedido.Observacion = Console.ReadLine()}");
 
-        Console.WriteLine("\nIngrese los datos del cliente: ");
-        Console.WriteLine($"\n\tNombre: {NuevoPedido.Cliente.Nombre = Console.ReadLine()}");
-        Console.WriteLine($"\tDireccion: {NuevoPedido.Cliente.Direccion = Console.ReadLine()}");
-        Console.WriteLine($"\tTelefono: {NuevoPedido.Cliente.Telefono = Console.ReadLine()}");
-        Console.WriteLine($"\tReferencias al domicilio: {NuevoPedido.Cliente.DatosReferenciaDireccion = Console.ReadLine()}");
+        Console.Write($"\nIngrese los datos del pedido numero: {NuevoPedido.Numero}");
+
+
+        Console.Write($"\n\tObservaciones del pedido: {NuevoPedido.Observacion = Console.ReadLine()}");
+
+        Console.Write("\nIngrese los datos del cliente: ");
+        Console.Write("\n\tNombre: ");
+        NuevoPedido.Cliente.Nombre = Console.ReadLine();
+
+        Console.Write("\n\tDireccion: ");
+        NuevoPedido.Cliente.Direccion = Console.ReadLine();
+
+        Console.Write("\n\tTelefono: ");
+        NuevoPedido.Cliente.Telefono = Console.ReadLine();
+
+        Console.Write("\n\tReferencias al domicilio: ");
+        NuevoPedido.Cliente.DatosReferenciaDireccion = Console.ReadLine();
 
 
         return NuevoPedido;
@@ -123,5 +132,26 @@ public class Cadeteria
         {
             Console.WriteLine("El numero de pedido cargado no es correcto");
         }
+    }
+
+    public void GenerarInforme()
+    {
+        // Total de envíos por cadete y monto total ganado
+        var informe = cadetes.Select(cadete => new
+        {
+            Cadete = cadete.Nombre,
+            CantidadPedidosEntregados = (cadete.JornalACobrar()) / 500,
+            MontoGanado = cadete.JornalACobrar()
+        });
+
+        // Mostrar el informe de cada cadete
+        foreach (var item in informe)
+        {
+            Console.WriteLine($"Cadete: {item.Cadete}, Pedidos Entregados: {item.CantidadPedidosEntregados}, Monto Ganado: {item.MontoGanado}");
+        }
+
+        // Calcular el promedio de envíos por cadete
+        double promedioEnvios = cadetes.Average(cadete => ((cadete.JornalACobrar()) / 500));
+        Console.WriteLine($"\nPromedio de envíos por cadete: {promedioEnvios}");
     }
 }
