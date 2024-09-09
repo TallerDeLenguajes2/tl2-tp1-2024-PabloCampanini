@@ -26,16 +26,40 @@ public class Cadete
     public void EntregarPedido()
     {
         pedidos.Remove(pedidos[0]);
+
     }
 
-    public void CambiarEstadoPedido(int NumeroPedidoBuscado)
+    public bool CambiarEstadoPedido(int NumeroPedidoBuscado)
     {
         foreach (var pedido in pedidos)
         {
             if (pedido.Numero == NumeroPedidoBuscado)
             {
                 pedido.Estado = (EstadoPedidos)random.Next(0, 6);
+
+                return true;
             }
         }
+
+        return false;
+    }
+
+    public Pedido ReasignarPedidos(int NumeroPedidoBuscado)
+    {
+        Pedido MoverPedido = null;
+
+        for (int i = 0; i < pedidos.Count; i++)
+        {
+            if (pedidos[i].Numero == NumeroPedidoBuscado)
+            {
+                MoverPedido = pedidos[i];
+
+                pedidos.Remove(pedidos[i]);
+
+                break;
+            }
+        }
+
+        return MoverPedido;
     }
 }

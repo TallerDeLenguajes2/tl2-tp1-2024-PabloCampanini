@@ -6,7 +6,7 @@ public class Cadeteria
     private List<Cadete> cadetes;
     private Random random = new Random();
 
-    
+
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
 
@@ -23,12 +23,12 @@ public class Cadeteria
     public void DespedirCadete(int ID)
     {
         foreach (var Cadete in cadetes)
-        {   
+        {
             if (Cadete.Id == ID)
             {
                 cadetes.Remove(Cadete);
             }
-            
+
         }
     }
 
@@ -54,7 +54,7 @@ public class Cadeteria
         Console.WriteLine($"\tDireccion: {NuevoPedido.Cliente.Direccion = Console.ReadLine()}");
         Console.WriteLine($"\tTelefono: {NuevoPedido.Cliente.Telefono = Console.ReadLine()}");
         Console.WriteLine($"\tReferencias al domicilio: {NuevoPedido.Cliente.DatosReferenciaDireccion = Console.ReadLine()}");
-        
+
 
         return NuevoPedido;
     }
@@ -65,7 +65,7 @@ public class Cadeteria
 
         foreach (var cadete in cadetes)
         {
-            if(cadete.Id == IdAleatorio)
+            if (cadete.Id == IdAleatorio)
             {
                 cadete.TomarPedido(PedidoParaAsignar);
             }
@@ -74,9 +74,54 @@ public class Cadeteria
 
     public void CambiarEstadoPedido(int NumeroPedidoBuscado)
     {
+        int control = 0;
+
         foreach (var cadete in cadetes)
         {
-            cadete.CambiarEstadoPedido(NumeroPedidoBuscado);
+            if (cadete.CambiarEstadoPedido(NumeroPedidoBuscado))
+            {
+                control = 1;
+
+                break;
+            }
+        }
+
+        if (control == 1)
+        {
+            Console.WriteLine("Cambiado con exito");
+        }
+        else
+        {
+            Console.WriteLine("El numero de pedido cargado no es correcto");
+        }
+    }
+
+    public void ReasignarPedidos(int NumeroPedidoBuscado)
+    {
+        int control = 0;
+        Pedido MoverPedido = null;
+
+        foreach (var cadete in cadetes)
+        {
+            MoverPedido = cadete.ReasignarPedidos(NumeroPedidoBuscado);
+
+            if (MoverPedido != null)
+            {
+                control = 1;
+
+                break;
+            }
+        }
+
+        if (control == 1)
+        {
+            AsignarPedido(MoverPedido);
+
+            Console.WriteLine("Pedido reasignado");
+        }
+        else
+        {
+            Console.WriteLine("El numero de pedido cargado no es correcto");
         }
     }
 }

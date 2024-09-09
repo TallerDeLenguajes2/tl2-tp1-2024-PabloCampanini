@@ -71,13 +71,25 @@ while (!ControlMenu)
             }
             break;
         case "3":
-            
+            string cambiarEstado;
+            Console.WriteLine($"Ingrese el numero de pedido: {cambiarEstado = Console.ReadLine()}");
+
+            if (int.TryParse(cambiarEstado, out int PedidoDebeCambiar))
+            {
+                cadeteria.CambiarEstadoPedido(PedidoDebeCambiar);
+            }
             break;
         case "4":
+            string reasignarPedido;
+            Console.WriteLine($"Ingrese el numero de pedido: {reasignarPedido = Console.ReadLine()}");
 
+            if (int.TryParse(reasignarPedido, out int PedidoParaReasignar))
+            {
+                cadeteria.ReasignarPedidos(PedidoParaReasignar);
+            }
             break;
         case "5":
-
+            
             ControlMenu = true;
             break;
         default:
