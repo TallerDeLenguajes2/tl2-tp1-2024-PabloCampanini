@@ -22,13 +22,40 @@ public class Cadeteria
 
     public void DespedirCadete(int ID)
     {
+        int controlExito = 0;
+
+        while (controlExito == 0)
+        {
+            int controlID = 0;
+    
+            foreach (var Cadete in cadetes)
+            {
+                if (Cadete.Id == ID)
+                {
+                    cadetes.Remove(Cadete);
+                    controlID = 1;
+                }
+            }
+    
+            if (controlID == 1)
+            {
+                Console.WriteLine("Cadete borrado con exito");
+
+                controlExito = 1;
+            }
+            else
+            {
+                Console.WriteLine("El ID ingresado no pertenece a un cadete activo");
+            }
+        }
+
+        List<string[]> DatosCadetes = new List<string[]>();
+
         foreach (var Cadete in cadetes)
         {
-            if (Cadete.Id == ID)
-            {
-                cadetes.Remove(Cadete);
-            }
+            string[] Datos = {Cadete.Nombre, Cadete.Direccion, Cadete.Telefono};
 
+            DatosCadetes.Add(Datos);
         }
     }
 
@@ -49,7 +76,8 @@ public class Cadeteria
         Console.Write($"\nIngrese los datos del pedido numero: {NuevoPedido.Numero}");
 
 
-        Console.Write($"\n\tObservaciones del pedido: {NuevoPedido.Observacion = Console.ReadLine()}");
+        Console.Write("\n\tObservaciones del pedido: ");
+        NuevoPedido.Observacion = Console.ReadLine();
 
         Console.Write("\nIngrese los datos del cliente: ");
         Console.Write("\n\tNombre: ");
@@ -153,5 +181,13 @@ public class Cadeteria
         // Calcular el promedio de envíos por cadete
         double promedioEnvios = cadetes.Average(cadete => ((cadete.JornalACobrar()) / 500));
         Console.WriteLine($"\nPromedio de envíos por cadete: {promedioEnvios}");
+    }
+
+    public void MostrarDatosPedido()
+    {
+        foreach (var cadete in cadetes)
+        {
+            cadete.MostrarDatosPedido();
+        }
     }
 }

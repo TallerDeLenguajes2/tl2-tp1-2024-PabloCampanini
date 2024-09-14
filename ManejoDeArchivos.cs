@@ -14,4 +14,15 @@ public class ManejoDeArchivos
             }
         }
     }
+
+    public void EscrituraDeArchivos(string NombreArchivo, List<string[]> ListaArreglo)
+    {
+        using (StreamWriter escribir = new StreamWriter((NombreArchivo + ".csv"), false))
+        {
+            foreach (var datos in ListaArreglo)
+            {
+                escribir.WriteLine(string.Join(",",datos));
+            }
+        }
+    }
 }

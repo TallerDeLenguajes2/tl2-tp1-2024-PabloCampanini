@@ -48,9 +48,9 @@ Console.WriteLine($"BIENVENIDO CADETERIA {cadeteria.Nombre}: ");
 
 while (!ControlMenu)
 {
-    Console.WriteLine("\n\t1 - Dar alta pedido\n\t2 - Asignar pedido a cadete");
+    Console.WriteLine("\n\t1 - Dar alta pedido\n\t2 - Mostrar Lista de Pedidos");
     Console.WriteLine("\t3 - Cambiar estado de pedido\n\t4 - Reasignar pedido a otro cadete\n\t5 - Pagar cadetes");
-    Console.WriteLine("\n\t6 - Salir");
+    Console.WriteLine("\t6 - Despedir cadete\n\n\t7 - Salir");
 
     Console.Write("Elija la operacion que quiere realizar: ");
     Menu = Console.ReadLine();
@@ -60,16 +60,10 @@ while (!ControlMenu)
         case "1":
             NuevoPedido = cadeteria.AltaPedido(NumeroPedido);
             NumeroPedido++;
+            cadeteria.AsignarPedido(NuevoPedido);
             break;
         case "2":
-            if (NuevoPedido != null)
-            {
-                cadeteria.AsignarPedido(NuevoPedido);
-            }
-            else
-            {
-                Console.WriteLine("Debe dar de alta un pedido antes de asignarlo.");
-            }
+            cadeteria.MostrarDatosPedido();
             break;
         case "3":
             string cambiarEstado;
@@ -83,7 +77,7 @@ while (!ControlMenu)
             break;
         case "4":
             string reasignarPedido;
-            Console.WriteLine("Ingrese el numero de pedido: ");
+            Console.Write("Ingrese el numero de pedido: ");
             reasignarPedido = Console.ReadLine();
 
             if (int.TryParse(reasignarPedido, out int PedidoParaReasignar))
@@ -95,6 +89,26 @@ while (!ControlMenu)
             cadeteria.PagarJornal();
             break;
         case "6":
+            int ControlCargaID = 0;
+
+            while (ControlCargaID == 0)
+            {
+                Console.Write("Ingrese el ID del cadete que quiere despedir: ");
+                string cargaID = Console.ReadLine();
+
+                if (int.TryParse(cargaID, out int IdBorrar))
+                {
+                    cadeteria.DespedirCadete(IdBorrar);
+
+                    ControlCargaID = 1;
+                }
+                else
+                {
+                    Console.WriteLine("El valor ingresado no corresponde a un numero");
+                }
+            }
+            break;
+        case "7":
             cadeteria.GenerarInforme();
             ControlMenu = true;
             break;

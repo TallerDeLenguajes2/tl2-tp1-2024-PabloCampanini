@@ -76,4 +76,17 @@ public class Cadete
 
         return MoverPedido;
     }
+
+    public void MostrarDatosPedido()
+    {
+        if (pedidos.Count() != 0)
+        {
+            Console.WriteLine($"\t\t*----- Pedidos del cadete {Nombre}-----*");
+
+            foreach (var pedido in pedidos)
+            {
+                pedido.VerDatosCliente();
+            }
+        }
+    }
 }
