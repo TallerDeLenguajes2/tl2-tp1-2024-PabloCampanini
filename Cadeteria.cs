@@ -253,4 +253,18 @@ public class Cadeteria
             }
         }
     }
+
+    public List<string[]> DatosCadetes()
+    {
+        List<string[]> Datos = new List<string[]>();
+
+        foreach (var cadete in cadetes)
+        {
+            string[] DatosCadetes = {cadete.Nombre, cadete.Direccion, cadete.Telefono};
+
+            Datos.Add(DatosCadetes);
+        }
+
+        return Datos;
+    }
 }

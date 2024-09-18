@@ -1,11 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 Cadeteria cadeteria = new Cadeteria();
+ManejoDeArchivos archivos = null;
 
-ManejoDeArchivos archivosCSV = new ManejoDeArchivos();
-
-string ArchivoCadetes = "DatosCadetes";
-string ArchivoCadeteria = "DatosCadeteria";
+string ArchivoCadetes = "";
+string ArchivoCadeteria = "";
 
 List<string[]> ListaDatosCadetes = new List<string[]>();
 List<string[]> ListaDatosCadeteria = new List<string[]>();
@@ -15,9 +14,54 @@ int NumeroPedido = 999;
 
 string Menu;
 bool ControlMenu = false;
+string FormatoArchivos;
+bool ControlFormato = false;
 
-archivosCSV.LecturaDeArchivos(ArchivoCadetes, ListaDatosCadetes);
-archivosCSV.LecturaDeArchivos(ArchivoCadeteria, ListaDatosCadeteria);
+
+while (!ControlFormato)
+{
+    Console.Write("Acceso de datos a usar 0: CSV, 1: JSON");
+    FormatoArchivos = Console.ReadLine();
+
+    if (int.TryParse(FormatoArchivos, out int Formato))
+    {
+        if (Formato == 0)
+        {
+            archivos = new ArchivosCSV();
+
+            ArchivoCadeteria = "DatosCadeteria.csv";
+            ArchivoCadetes = "DatosCadetes.csv";
+
+            archivos.LecturaDeArchivos(ArchivoCadeteria, ListaDatosCadeteria);
+            archivos.LecturaDeArchivos(ArchivoCadetes, ListaDatosCadetes);
+
+            ControlFormato = true;
+        }
+        else
+        {
+            if (Formato == 1)
+            {
+                archivos = new ArchivosJson();
+
+                ArchivoCadeteria = "DatosCadeteria.json";
+                ArchivoCadetes = "DatosCadetes.json";
+
+                archivos.LecturaDeArchivos(ArchivoCadeteria, ListaDatosCadeteria);
+                archivos.LecturaDeArchivos(ArchivoCadetes, ListaDatosCadetes);
+
+                ControlFormato = true;
+            }
+            else
+            {
+                Console.WriteLine("Debe ingresar un dato valido, 0 o 1");
+            }
+        }
+    }
+    else
+    {
+        Console.WriteLine("Debe ingresar un valor numerico");
+    }
+}
 
 foreach (var arregloDatos in ListaDatosCadetes)
 {
@@ -115,6 +159,7 @@ while (!ControlMenu)
             break;
         case "7":
             cadeteria.GenerarInforme();
+            archivos.EscrituraDeArchivos(ArchivoCadetes, cadeteria.DatosCadetes());
             ControlMenu = true;
             break;
         default:
