@@ -16,8 +16,6 @@ int NumeroPedido = 999;
 string Menu;
 bool ControlMenu = false;
 
-Pedido NuevoPedido = null;
-
 archivosCSV.LecturaDeArchivos(ArchivoCadetes, ListaDatosCadetes);
 archivosCSV.LecturaDeArchivos(ArchivoCadeteria, ListaDatosCadeteria);
 
@@ -58,12 +56,19 @@ while (!ControlMenu)
     switch (Menu)
     {
         case "1":
-            NuevoPedido = cadeteria.AltaPedido(NumeroPedido);
+            cadeteria.AltaPedido(NumeroPedido);
             NumeroPedido++;
-            cadeteria.AsignarPedido(NuevoPedido);
+            cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
             break;
         case "2":
-            cadeteria.MostrarDatosPedido();
+            string mostrarPedido;
+            Console.Write("Ingrese el numero de pedido: ");
+            mostrarPedido = Console.ReadLine();
+
+            if (int.TryParse(mostrarPedido, out int NumeroPedidoBuscado))
+            {
+                cadeteria.MostrarDatosPedido(NumeroPedidoBuscado);
+            }
             break;
         case "3":
             string cambiarEstado;
@@ -82,7 +87,7 @@ while (!ControlMenu)
 
             if (int.TryParse(reasignarPedido, out int PedidoParaReasignar))
             {
-                cadeteria.ReasignarPedidos(PedidoParaReasignar);
+                cadeteria.ReasignarPedidos(cadeteria.CadeteAleatorio(), PedidoParaReasignar);
             }
             break;
         case "5":

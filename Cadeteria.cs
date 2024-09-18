@@ -1,11 +1,10 @@
-
 public class Cadeteria
 {
     private string nombre;
     private string telefono;
     private List<Cadete> cadetes;
-    private Random random = new Random();
-
+    private List<Pedido> pedidos;
+    private Random rand = new Random();
 
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
@@ -13,6 +12,7 @@ public class Cadeteria
     public Cadeteria()
     {
         cadetes = new List<Cadete>();
+        pedidos = new List<Pedido>();
     }
 
     public void ContratarCadete(Cadete NuevoCadete)
@@ -27,16 +27,16 @@ public class Cadeteria
         while (controlExito == 0)
         {
             int controlID = 0;
-    
-            foreach (var Cadete in cadetes)
+
+            for (int i = 0; i < cadetes.Count; i++)
             {
-                if (Cadete.Id == ID)
+                if (cadetes[i].Id == ID)
                 {
-                    cadetes.Remove(Cadete);
+                    cadetes.Remove(cadetes[i]);
                     controlID = 1;
                 }
             }
-    
+
             if (controlID == 1)
             {
                 Console.WriteLine("Cadete borrado con exito");
@@ -48,26 +48,9 @@ public class Cadeteria
                 Console.WriteLine("El ID ingresado no pertenece a un cadete activo");
             }
         }
-
-        List<string[]> DatosCadetes = new List<string[]>();
-
-        foreach (var Cadete in cadetes)
-        {
-            string[] Datos = {Cadete.Nombre, Cadete.Direccion, Cadete.Telefono};
-
-            DatosCadetes.Add(Datos);
-        }
     }
 
-    public void PagarJornal()
-    {
-        foreach (var Cadete in cadetes)
-        {
-            Console.WriteLine($"\n\nPago cadete ID = {Cadete.Id} \n\t-----> Nombre = {Cadete.Nombre} *-----* Pago = ${Cadete.JornalACobrar()}");
-        }
-    }
-
-    public Pedido AltaPedido(int NumeroPedido)
+    public void AltaPedido(int NumeroPedido)
     {
         Pedido NuevoPedido = new Pedido();
 
@@ -93,19 +76,79 @@ public class Cadeteria
         NuevoPedido.Cliente.DatosReferenciaDireccion = Console.ReadLine();
 
 
-        return NuevoPedido;
+        pedidos.Add(NuevoPedido);
     }
 
-    public void AsignarPedido(Pedido PedidoParaAsignar)
+    public int CadeteAleatorio()
     {
-        int IdAleatorio = random.Next(10, 10 + cadetes.Count);
+        return cadetes[rand.Next(0, cadetes.Count)].Id;
+    }
+    public int AsignarCadeteAPedido(int IdCadete, int NumeroPedido)
+    {
+        int controlAsignado = 0;
+        int controlID = 0;
 
         foreach (var cadete in cadetes)
         {
-            if (cadete.Id == IdAleatorio)
+            if (cadete.Id == IdCadete)
             {
-                cadete.TomarPedido(PedidoParaAsignar);
+                controlID = 1;
+
+                for (int i = 0; i < pedidos.Count; i++)
+                {
+                    if (NumeroPedido == pedidos[i].Numero)
+                    {
+                        pedidos[i].AsignarCadeteAPedido(cadete);
+
+                        controlAsignado = 1;
+
+                        break;
+                    }
+                }
+
+                break;
             }
+        }
+
+        if (controlAsignado == 1)
+        {
+            Console.WriteLine("Pedido asignado correctamente");
+        }
+        else
+        {
+            if (controlID == 1)
+            {
+                Console.WriteLine("El numero de pedido ingresado no es correcto");
+            }
+            else
+            {
+                Console.WriteLine("El ID ingresado no corresponde a un cadete activo");
+            }
+        }
+
+        return controlAsignado;
+    }
+
+    public float JornalACobrar(int IdCadete)
+    {
+        int contadorPedidos = 0;
+
+        foreach (var pedido in pedidos)
+        {
+            if (IdCadete == pedido.CadeteAsignado.Id)
+            {
+                contadorPedidos++; ;
+            }
+        }
+
+        return contadorPedidos * 500;   //En caso de que no se encuentre el ID buscado
+    }
+
+    public void PagarJornal()
+    {
+        foreach (var Cadete in cadetes)
+        {
+            Console.WriteLine($"\n\nPago cadete ID = {Cadete.Id} \n\t-----> Nombre = {Cadete.Nombre} *-----* Pago = ${JornalACobrar(Cadete.Id)}");
         }
     }
 
@@ -113,10 +156,12 @@ public class Cadeteria
     {
         int control = 0;
 
-        foreach (var cadete in cadetes)
+        for (int i = 0; i < pedidos.Count; i++)
         {
-            if (cadete.CambiarEstadoPedido(NumeroPedidoBuscado))
+            if (pedidos[i].Numero == NumeroPedidoBuscado)
             {
+                pedidos[i].CadeteAsignado.CambiarEstadoPedido(pedidos[i]);
+
                 control = 1;
 
                 break;
@@ -133,32 +178,47 @@ public class Cadeteria
         }
     }
 
-    public void ReasignarPedidos(int NumeroPedidoBuscado)
+    public void ReasignarPedidos(int IdCadeteNuevo, int NumeroPedidoBuscado)
     {
-        int control = 0;
-        Pedido MoverPedido = null;
+        int controlReasignado = 0;
+        int controlNumero = 0;
 
-        foreach (var cadete in cadetes)
+        foreach (var pedido in pedidos)
         {
-            MoverPedido = cadete.ReasignarPedidos(NumeroPedidoBuscado);
-
-            if (MoverPedido != null)
+            if (pedido.Numero == NumeroPedidoBuscado)
             {
-                control = 1;
+                controlNumero = 1;
+
+                foreach (var cadete in cadetes)
+                {
+                    if (cadete.Id == IdCadeteNuevo)
+                    {
+                        pedido.AsignarCadeteAPedido(cadete);
+
+                        controlReasignado = 1;
+
+                        break;
+                    }
+                }
 
                 break;
             }
         }
 
-        if (control == 1)
+        if (controlReasignado == 1)
         {
-            AsignarPedido(MoverPedido);
-
             Console.WriteLine("Pedido reasignado");
         }
         else
         {
-            Console.WriteLine("El numero de pedido cargado no es correcto");
+            if (controlNumero == 0)
+            {
+                Console.WriteLine("El numero de pedido cargado no es correcto");
+            }
+            else
+            {
+                Console.WriteLine("El ID ingresado no pertenece a un cadete activo");
+            }
         }
     }
 
@@ -168,8 +228,8 @@ public class Cadeteria
         var informe = cadetes.Select(cadete => new
         {
             Cadete = cadete.Nombre,
-            CantidadPedidosEntregados = (cadete.JornalACobrar()) / 500,
-            MontoGanado = cadete.JornalACobrar()
+            CantidadPedidosEntregados = (JornalACobrar(cadete.Id)) / 500,
+            MontoGanado = JornalACobrar(cadete.Id)
         });
 
         // Mostrar el informe de cada cadete
@@ -179,15 +239,18 @@ public class Cadeteria
         }
 
         // Calcular el promedio de envíos por cadete
-        double promedioEnvios = cadetes.Average(cadete => ((cadete.JornalACobrar()) / 500));
+        double promedioEnvios = cadetes.Average(cadete => ((JornalACobrar(cadete.Id)) / 500));
         Console.WriteLine($"\nPromedio de envíos por cadete: {promedioEnvios}");
     }
 
-    public void MostrarDatosPedido()
+    public void MostrarDatosPedido(int NumeroPedidoBuscado)
     {
-        foreach (var cadete in cadetes)
+        foreach (var pedido in pedidos)
         {
-            cadete.MostrarDatosPedido();
+            if (NumeroPedidoBuscado == pedido.Numero)
+            {
+                pedido.VerDatosCliente();
+            }
         }
     }
 }
