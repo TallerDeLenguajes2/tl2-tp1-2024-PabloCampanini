@@ -20,34 +20,18 @@ public class Cadeteria
         cadetes.Add(NuevoCadete);
     }
 
-    public void DespedirCadete(int ID)
+    public bool DespedirCadete(int ID)
     {
-        int controlExito = 0;
-
-        while (controlExito == 0)
+        for (int i = 0; i < cadetes.Count; i++)
         {
-            int controlID = 0;
-
-            for (int i = 0; i < cadetes.Count; i++)
+            if (cadetes[i].Id == ID)
             {
-                if (cadetes[i].Id == ID)
-                {
-                    cadetes.Remove(cadetes[i]);
-                    controlID = 1;
-                }
-            }
-
-            if (controlID == 1)
-            {
-                Console.WriteLine("Cadete borrado con exito");
-
-                controlExito = 1;
-            }
-            else
-            {
-                Console.WriteLine("El ID ingresado no pertenece a un cadete activo");
+                cadetes.Remove(cadetes[i]);
+                return true;
             }
         }
+
+        return false;
     }
 
     public void AltaPedido(int NumeroPedido)
@@ -260,7 +244,7 @@ public class Cadeteria
 
         foreach (var cadete in cadetes)
         {
-            string[] DatosCadetes = {cadete.Nombre, cadete.Direccion, cadete.Telefono};
+            string[] DatosCadetes = { cadete.Nombre, cadete.Direccion, cadete.Telefono };
 
             Datos.Add(DatosCadetes);
         }
