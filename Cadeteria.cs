@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 public class Cadeteria
 {
     private string nombre;
@@ -34,98 +36,65 @@ public class Cadeteria
         return false;
     }
 
-    public void AltaPedido(int NumeroPedido)
+    public bool AltaPedido(int NumeroPedido, string ObservacionPedido, string NombreCliente, string DireccionCliente, string TelefonoCliente, string ReferenciaDireccion)
     {
         Pedido NuevoPedido = new Pedido();
 
         NuevoPedido.Numero = NumeroPedido;
 
-        Console.Write($"\nIngrese los datos del pedido numero: {NuevoPedido.Numero}");
+        NuevoPedido.Observacion = ObservacionPedido;
 
+        NuevoPedido.Cliente.Nombre = NombreCliente;
 
-        Console.Write("\n\tObservaciones del pedido: ");
-        NuevoPedido.Observacion = Console.ReadLine();
+        NuevoPedido.Cliente.Direccion = DireccionCliente;
 
-        Console.Write("\nIngrese los datos del cliente: ");
-        Console.Write("\n\tNombre: ");
-        NuevoPedido.Cliente.Nombre = Console.ReadLine();
+        NuevoPedido.Cliente.Telefono = TelefonoCliente;
 
-        Console.Write("\n\tDireccion: ");
-        NuevoPedido.Cliente.Direccion = Console.ReadLine();
+        NuevoPedido.Cliente.DatosReferenciaDireccion = ReferenciaDireccion;
 
-        Console.Write("\n\tTelefono: ");
-        NuevoPedido.Cliente.Telefono = Console.ReadLine();
-
-        Console.Write("\n\tReferencias al domicilio: ");
-        NuevoPedido.Cliente.DatosReferenciaDireccion = Console.ReadLine();
-
+        int CantidadAntesCargar = pedidos.Count();
 
         pedidos.Add(NuevoPedido);
+
+        return pedidos.Count() > CantidadAntesCargar;
     }
 
     public int CadeteAleatorio()
     {
         return cadetes[rand.Next(0, cadetes.Count)].Id;
     }
-    public int AsignarCadeteAPedido(int IdCadete, int NumeroPedido)
+    public bool AsignarCadeteAPedido(int IdCadete, int NumeroPedido)
     {
-        int controlAsignado = 0;
-        int controlID = 0;
+        //Hay dos formas de hacer una busqueda mejor que un foreach
+        //Ambas devuelven el primer elemento que se busca o null
 
-        foreach (var cadete in cadetes)
+
+        //Expresion lambda generica item => item.Propiedad == ValorBuscado
+
+
+        //Metodo de listas Find pero necesita una expresion lambda o funcion
+        var PedidoBuscado = pedidos.Find(pedido => pedido.Numero == NumeroPedido);
+        
+        //Consulta Linq y necesita una expresion lambda
+        var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
+
+        if (PedidoBuscado == null && CadeteBuscado == null)
         {
-            if (cadete.Id == IdCadete)
-            {
-                controlID = 1;
-
-                for (int i = 0; i < pedidos.Count; i++)
-                {
-                    if (NumeroPedido == pedidos[i].Numero)
-                    {
-                        pedidos[i].AsignarCadeteAPedido(cadete);
-
-                        controlAsignado = 1;
-
-                        break;
-                    }
-                }
-
-                break;
-            }
+            return false;
         }
 
-        if (controlAsignado == 1)
-        {
-            Console.WriteLine("Pedido asignado correctamente");
-        }
-        else
-        {
-            if (controlID == 1)
-            {
-                Console.WriteLine("El numero de pedido ingresado no es correcto");
-            }
-            else
-            {
-                Console.WriteLine("El ID ingresado no corresponde a un cadete activo");
-            }
-        }
+        PedidoBuscado.AsignarCadeteAPedido(CadeteBuscado);
 
-        return controlAsignado;
+        return true;
     }
 
     public float JornalACobrar(int IdCadete)
     {
         int contadorPedidos = 0;
 
-        foreach (var pedido in pedidos)
-        {
-            if (IdCadete == pedido.CadeteAsignado.Id)
-            {
-                contadorPedidos++; ;
-            }
-        }
+        contadorPedidos = pedidos.Count(pedido => pedido.CadeteAsignado.Id == IdCadete);
 
-        return contadorPedidos * 500;   //En caso de que no se encuentre el ID buscado
+        return contadorPedidos * 500;   
     }
 
     public void PagarJornal()
