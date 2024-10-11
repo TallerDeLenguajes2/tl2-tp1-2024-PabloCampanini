@@ -105,74 +105,33 @@ public class Cadeteria
         }
     }
 
-    public void CambiarEstadoPedido(int NumeroPedidoBuscado)
+    public bool CambiarEstadoPedido(int NumeroPedidoBuscado)
     {
-        int control = 0;
+        var PedidoBuscado = pedidos.FirstOrDefault(pedido => pedido.Numero == NumeroPedidoBuscado);
 
-        for (int i = 0; i < pedidos.Count; i++)
+        if (PedidoBuscado == null)
         {
-            if (pedidos[i].Numero == NumeroPedidoBuscado)
-            {
-                pedidos[i].CadeteAsignado.CambiarEstadoPedido(pedidos[i]);
-
-                control = 1;
-
-                break;
-            }
+            return false;
         }
 
-        if (control == 1)
-        {
-            Console.WriteLine("Cambiado con exito");
-        }
-        else
-        {
-            Console.WriteLine("El numero de pedido cargado no es correcto");
-        }
+        PedidoBuscado.CadeteAsignado.CambiarEstadoPedido(PedidoBuscado);
+
+        return true;
     }
 
-    public void ReasignarPedidos(int IdCadeteNuevo, int NumeroPedidoBuscado)
+    public bool ReasignarPedidos(int IdCadeteNuevo, int NumeroPedidoBuscado)
     {
-        int controlReasignado = 0;
-        int controlNumero = 0;
+        var PedidoBuscado = pedidos.FirstOrDefault(pedido => pedido.Numero == NumeroPedidoBuscado);
+        var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadeteNuevo);
 
-        foreach (var pedido in pedidos)
+        if (PedidoBuscado == null || CadeteBuscado == null)
         {
-            if (pedido.Numero == NumeroPedidoBuscado)
-            {
-                controlNumero = 1;
-
-                foreach (var cadete in cadetes)
-                {
-                    if (cadete.Id == IdCadeteNuevo)
-                    {
-                        pedido.AsignarCadeteAPedido(cadete);
-
-                        controlReasignado = 1;
-
-                        break;
-                    }
-                }
-
-                break;
-            }
+            return false;
         }
 
-        if (controlReasignado == 1)
-        {
-            Console.WriteLine("Pedido reasignado");
-        }
-        else
-        {
-            if (controlNumero == 0)
-            {
-                Console.WriteLine("El numero de pedido cargado no es correcto");
-            }
-            else
-            {
-                Console.WriteLine("El ID ingresado no pertenece a un cadete activo");
-            }
-        }
+        PedidoBuscado.AsignarCadeteAPedido(CadeteBuscado);
+
+        return true;
     }
 
     public void GenerarInforme()
@@ -196,15 +155,18 @@ public class Cadeteria
         Console.WriteLine($"\nPromedio de envíos por cadete: {promedioEnvios}");
     }
 
-    public void MostrarDatosPedido(int NumeroPedidoBuscado)
+    public bool MostrarDatosPedido(int NumeroPedidoBuscado)
     {
-        foreach (var pedido in pedidos)
+        var PedidoBuscado = pedidos.FirstOrDefault(pedido => pedido.Numero == NumeroPedidoBuscado);
+
+        if (PedidoBuscado == null)
         {
-            if (NumeroPedidoBuscado == pedido.Numero)
-            {
-                pedido.VerDatosCliente();
-            }
+            return false;
         }
+
+        PedidoBuscado.VerDatosCliente();
+
+        return true;
     }
 
     public List<string[]> DatosCadetes()
