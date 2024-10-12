@@ -34,6 +34,23 @@ public class Cadeteria
         return false;
     }
 
+    public int CantidadCadetes()
+    {
+        return cadetes.Count();
+    }
+
+    public string NombreCadete(int IdCadete)
+    {
+        var cadete = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
+
+        if (cadete == null)
+        {
+            return "El ID ingresado no es valido";
+        }
+        
+        return cadete.Nombre;
+    }
+
     public bool AltaPedido(int NumeroPedido, string ObservacionPedido, string NombreCliente, string DireccionCliente, string TelefonoCliente, string ReferenciaDireccion)
     {
         Pedido NuevoPedido = new Pedido();

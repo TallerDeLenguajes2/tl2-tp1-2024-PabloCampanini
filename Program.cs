@@ -17,6 +17,13 @@ bool ControlMenu = false;
 string FormatoArchivos;
 bool ControlFormato = false;
 
+//Datos de pedidos
+string ObservacionPedido;
+string NombreCliente;
+string DireccionCliente;
+string TelefonoCliente;
+string ReferenciaDireccion;
+
 
 while (!ControlFormato)
 {
@@ -100,8 +107,25 @@ while (!ControlMenu)
     switch (Menu)
     {
         case "1":
-            
-            cadeteria.AltaPedido(NumeroPedido);
+            Console.Write($"\nIngrese los datos del pedido numero: {NumeroPedido}");
+
+            Console.Write("\n\tObservaciones del pedido: ");
+            ObservacionPedido = Console.ReadLine();
+
+            Console.Write("\nIngrese los datos del cliente: ");
+            Console.Write("\n\tNombre: ");
+            NombreCliente = Console.ReadLine();
+
+            Console.Write("\n\tDireccion: ");
+            DireccionCliente = Console.ReadLine();
+
+            Console.Write("\n\tTelefono: ");
+            TelefonoCliente = Console.ReadLine();
+
+            Console.Write("\n\tReferencias al domicilio: ");
+            ReferenciaDireccion = Console.ReadLine();
+
+            cadeteria.AltaPedido(NumeroPedido, ObservacionPedido, NombreCliente, DireccionCliente, TelefonoCliente, ReferenciaDireccion);
             NumeroPedido++;
             cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
             break;
@@ -112,7 +136,10 @@ while (!ControlMenu)
 
             if (int.TryParse(mostrarPedido, out int NumeroPedidoBuscado))
             {
-                cadeteria.MostrarDatosPedido(NumeroPedidoBuscado);
+                if (!cadeteria.MostrarDatosPedido(NumeroPedidoBuscado))
+                {
+                    Console.WriteLine("El numero de pedido ingresado no existe");
+                }
             }
             break;
         case "3":
@@ -122,7 +149,10 @@ while (!ControlMenu)
 
             if (int.TryParse(cambiarEstado, out int PedidoDebeCambiar))
             {
-                cadeteria.CambiarEstadoPedido(PedidoDebeCambiar);
+                if (!cadeteria.CambiarEstadoPedido(PedidoDebeCambiar))
+                {
+                    Console.WriteLine("El numero de pedido ingresado no existe");
+                }
             }
             break;
         case "4":
@@ -132,11 +162,20 @@ while (!ControlMenu)
 
             if (int.TryParse(reasignarPedido, out int PedidoParaReasignar))
             {
-                cadeteria.ReasignarPedidos(cadeteria.CadeteAleatorio(), PedidoParaReasignar);
+                if (!cadeteria.ReasignarPedidos(cadeteria.CadeteAleatorio(), PedidoParaReasignar))
+                {
+                    Console.WriteLine("El numero de pedido ingresado no existe");
+                }
             }
             break;
         case "5":
-            cadeteria.PagarJornal();
+            int cadete = 10;
+
+            for (int i = 0; i < cadeteria.CantidadCadetes(); i++)
+            {
+                Console.WriteLine(cadeteria.PagarJornal(cadete));
+                cadete++;
+            }
             break;
         case "6":
             int ControlCargaID = 0;
@@ -148,9 +187,14 @@ while (!ControlMenu)
 
                 if (int.TryParse(cargaID, out int IdBorrar))
                 {
-                    cadeteria.DespedirCadete(IdBorrar);
-
-                    ControlCargaID = 1;
+                    if (!cadeteria.DespedirCadete(IdBorrar))
+                    {
+                        Console.WriteLine("El ID ingresado no existe");
+                    }
+                    else
+                    {
+                        ControlCargaID = 1;
+                    }
                 }
                 else
                 {
@@ -159,7 +203,20 @@ while (!ControlMenu)
             }
             break;
         case "7":
-            cadeteria.GenerarInforme();
+            Console.WriteLine(cadeteria.ObtenerPromedioEnvios());
+
+            cadete = 10;
+
+            for (int i = 0; i < cadeteria.CantidadCadetes(); i++)
+            {
+                Console.WriteLine("Cadete: " + cadeteria.NombreCadete(cadete));
+
+                Console.WriteLine("Pedidos entregados: " + cadeteria.ObtenerCantidadPedidosEntregados(cadete));
+                Console.WriteLine("Total ganado: $" + cadeteria.ObtenerMontoGanado(cadete));
+
+                cadete++;
+            }
+
             archivos.EscrituraDeArchivos(ArchivoCadetes, cadeteria.DatosCadetes());
             ControlMenu = true;
             break;
