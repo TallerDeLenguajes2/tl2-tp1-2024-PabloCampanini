@@ -1,5 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
-
 public class Cadeteria
 {
     private string nombre;
@@ -74,7 +72,7 @@ public class Cadeteria
 
         //Metodo de listas Find pero necesita una expresion lambda o funcion
         var PedidoBuscado = pedidos.Find(pedido => pedido.Numero == NumeroPedido);
-        
+
         //Consulta Linq y necesita una expresion lambda
         var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
 
@@ -94,16 +92,21 @@ public class Cadeteria
 
         contadorPedidos = pedidos.Count(pedido => pedido.CadeteAsignado.Id == IdCadete);
 
-        return contadorPedidos * 500;   
+        return contadorPedidos * 500;
     }
 
-    public void PagarJornal()
+    public string PagarJornal(int IdCadete)
     {
-        foreach (var Cadete in cadetes)
+        var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
+
+        if (CadeteBuscado == null)
         {
-            Console.WriteLine($"\n\nPago cadete ID = {Cadete.Id} \n\t-----> Nombre = {Cadete.Nombre} *-----* Pago = ${JornalACobrar(Cadete.Id)}");
+            return "Cadete no encontrado.";
         }
+
+        return $"Pago cadete ID = {CadeteBuscado.Id}\n\tNombre = {CadeteBuscado.Nombre}\n\tPago = ${JornalACobrar(CadeteBuscado.Id)}";
     }
+
 
     public bool CambiarEstadoPedido(int NumeroPedidoBuscado)
     {
@@ -134,26 +137,33 @@ public class Cadeteria
         return true;
     }
 
-    public void GenerarInforme()
+    public float ObtenerCantidadPedidosEntregados(int IdCadete)
     {
-        // Total de envíos por cadete y monto total ganado
-        var informe = cadetes.Select(cadete => new
+        var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
+        if (CadeteBuscado == null)
         {
-            Cadete = cadete.Nombre,
-            CantidadPedidosEntregados = (JornalACobrar(cadete.Id)) / 500,
-            MontoGanado = JornalACobrar(cadete.Id)
-        });
-
-        // Mostrar el informe de cada cadete
-        foreach (var item in informe)
-        {
-            Console.WriteLine($"Cadete: {item.Cadete}, Pedidos Entregados: {item.CantidadPedidosEntregados}, Monto Ganado: {item.MontoGanado}");
+            return -1;
         }
 
-        // Calcular el promedio de envíos por cadete
-        double promedioEnvios = cadetes.Average(cadete => ((JornalACobrar(cadete.Id)) / 500));
-        Console.WriteLine($"\nPromedio de envíos por cadete: {promedioEnvios}");
+        return JornalACobrar(IdCadete) / 500; 
     }
+
+    public double ObtenerMontoGanado(int IdCadete)
+    {
+        var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
+        if (CadeteBuscado == null)
+        {
+            return -1; 
+        }
+
+        return JornalACobrar(IdCadete);
+    }
+
+    public double ObtenerPromedioEnvios()
+    {
+        return cadetes.Average(cadete => (JornalACobrar(cadete.Id) / 500));
+    }
+
 
     public bool MostrarDatosPedido(int NumeroPedidoBuscado)
     {

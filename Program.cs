@@ -100,6 +100,7 @@ while (!ControlMenu)
     switch (Menu)
     {
         case "1":
+            
             cadeteria.AltaPedido(NumeroPedido);
             NumeroPedido++;
             cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
