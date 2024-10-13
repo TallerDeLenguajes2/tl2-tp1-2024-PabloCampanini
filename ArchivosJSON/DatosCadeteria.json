@@ -1,4 +1,6 @@
-{
-    "nombre": "MotoExpress",
-    "telefono": "381-555-1122"
-}
+[
+    [
+        "MotoExpress",
+        "381-555-1122"
+    ]
+]
