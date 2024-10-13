@@ -100,9 +100,15 @@ while (!ControlMenu)
     switch (Menu)
     {
         case "1":
-            cadeteria.AltaPedido(NumeroPedido);
+            bool control = false;
+
+            while (!control)
+            {
+                cadeteria.AltaPedido(NumeroPedido);
+                control = cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
+            }
+            
             NumeroPedido++;
-            cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
             break;
         case "2":
             string mostrarPedido;

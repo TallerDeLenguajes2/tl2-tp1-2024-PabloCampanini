@@ -83,9 +83,9 @@ public class Cadeteria
     {
         return cadetes[rand.Next(0, cadetes.Count)].Id;
     }
-    public int AsignarCadeteAPedido(int IdCadete, int NumeroPedido)
+    public bool AsignarCadeteAPedido(int IdCadete, int NumeroPedido)
     {
-        int controlAsignado = 0;
+        bool controlAsignado = false;
         int controlID = 0;
 
         foreach (var cadete in cadetes)
@@ -100,7 +100,7 @@ public class Cadeteria
                     {
                         pedidos[i].AsignarCadeteAPedido(cadete);
 
-                        controlAsignado = 1;
+                        controlAsignado = true;
 
                         break;
                     }
@@ -110,7 +110,7 @@ public class Cadeteria
             }
         }
 
-        if (controlAsignado == 1)
+        if (controlAsignado)
         {
             Console.WriteLine("Pedido asignado correctamente");
         }
