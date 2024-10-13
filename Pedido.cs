@@ -18,17 +18,18 @@ public class Pedido
         CadeteAsignado = null;
     }
 
-    public void VerDireccionCliente()
+    public string VerDireccionCliente()
     {
-        Console.WriteLine("Domicilio: " + Cliente.Direccion);
+        return $"Domicilio: {Cliente.Direccion}";
     }
 
-    public void VerDatosCliente()
+    public string VerDatosCliente()
     {
-        Console.WriteLine("Nombre: " + Cliente.Nombre);
-        Console.WriteLine("Telefono: " + Cliente.Telefono);
-        VerDireccionCliente();
-        Console.WriteLine("Referencias: " + Cliente.DatosReferenciaDireccion);
+        string datos = $"Nombre: {Cliente.Nombre}\n" +
+                       $"Telefono: {Cliente.Telefono}\n" +
+                       VerDireccionCliente() + "\n" +
+                       $"Referencias: {Cliente.DatosReferenciaDireccion}";
+        return datos;
     }
 
     public void AsignarCadeteAPedido(Cadete cadete)

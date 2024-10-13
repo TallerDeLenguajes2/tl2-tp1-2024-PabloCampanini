@@ -10,7 +10,7 @@ public class ArchivosCSV : ManejoDeArchivos
 {
     public override void LecturaDeArchivos(string NombreArchivo, List<string[]> ListaArreglo)
     {
-        using (StreamReader sr = new StreamReader(NombreArchivo + ".csv"))   //Cargo el archivo csv usando StreamReader
+        using (StreamReader sr = new StreamReader(NombreArchivo))   //Cargo el archivo csv usando StreamReader
         {
             string Linea;
 
@@ -25,7 +25,7 @@ public class ArchivosCSV : ManejoDeArchivos
 
     public override void EscrituraDeArchivos(string NombreArchivo, List<string[]> ListaArreglo)
     {
-        using (StreamWriter escribir = new StreamWriter((NombreArchivo + ".csv"), false))
+        using (StreamWriter escribir = new StreamWriter((NombreArchivo), false))
         {
             foreach (var datos in ListaArreglo)
             {

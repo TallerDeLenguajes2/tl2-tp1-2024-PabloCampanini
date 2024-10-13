@@ -196,17 +196,15 @@ public class Cadeteria
         return true;
     }
 
-    public List<string[]> DatosCadetes()
+    public string DatosCadete(int control)
     {
-        List<string[]> Datos = new List<string[]>();
+        string DatosCadete = "";
 
-        foreach (var cadete in cadetes)
+        if (cadetes[control] != null)
         {
-            string[] DatosCadetes = { cadete.Nombre, cadete.Direccion, cadete.Telefono };
-
-            Datos.Add(DatosCadetes);
+            DatosCadete = cadetes[control].Nombre +","+ cadetes[control].Direccion+","+ cadetes[control].Telefono;
         }
 
-        return Datos;
+        return DatosCadete;
     }
 }

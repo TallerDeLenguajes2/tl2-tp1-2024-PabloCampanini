@@ -27,7 +27,7 @@ string ReferenciaDireccion;
 
 while (!ControlFormato)
 {
-    Console.Write("Acceso de datos a usar 0: CSV, 1: JSON");
+    Console.Write("Acceso de datos a usar 0: CSV, 1: JSON\n Seleccione uno: ");
     FormatoArchivos = Console.ReadLine();
 
     if (int.TryParse(FormatoArchivos, out int Formato))
@@ -207,6 +207,8 @@ while (!ControlMenu)
 
             cadete = 10;
 
+            ListaDatosCadetes.Clear();
+
             for (int i = 0; i < cadeteria.CantidadCadetes(); i++)
             {
                 Console.WriteLine("Cadete: " + cadeteria.NombreCadete(cadete));
@@ -214,10 +216,14 @@ while (!ControlMenu)
                 Console.WriteLine("Pedidos entregados: " + cadeteria.ObtenerCantidadPedidosEntregados(cadete));
                 Console.WriteLine("Total ganado: $" + cadeteria.ObtenerMontoGanado(cadete));
 
+                string[] DatosCadete = cadeteria.DatosCadete(i).Split(',');
+
+                ListaDatosCadetes.Add(DatosCadete);
+
                 cadete++;
             }
 
-            archivos.EscrituraDeArchivos(ArchivoCadetes, cadeteria.DatosCadetes());
+            archivos.EscrituraDeArchivos(ArchivoCadetes, ListaDatosCadetes);
             ControlMenu = true;
             break;
         default:
