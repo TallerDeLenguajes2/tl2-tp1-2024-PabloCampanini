@@ -27,7 +27,7 @@ string ReferenciaDireccion;
 
 while (!ControlFormato)
 {
-    Console.Write("Acceso de datos a usar 0: CSV, 1: JSON\n Seleccione uno: ");
+    Console.Write("\n\nAcceso de datos a usar 0: CSV, 1: JSON\n Seleccione uno: ");
     FormatoArchivos = Console.ReadLine();
 
     if (int.TryParse(FormatoArchivos, out int Formato))
@@ -36,8 +36,8 @@ while (!ControlFormato)
         {
             archivos = new ArchivosCSV();
 
-            ArchivoCadeteria = "DatosCadeteria.csv";
-            ArchivoCadetes = "DatosCadetes.csv";
+            ArchivoCadeteria = @"ArchivosCSV\DatosCadeteria.csv";
+            ArchivoCadetes = @"ArchivosCSV\DatosCadetes.csv";
 
             archivos.LecturaDeArchivos(ArchivoCadeteria, ListaDatosCadeteria);
             archivos.LecturaDeArchivos(ArchivoCadetes, ListaDatosCadetes);
@@ -50,8 +50,8 @@ while (!ControlFormato)
             {
                 archivos = new ArchivosJson();
 
-                ArchivoCadeteria = "DatosCadeteria.json";
-                ArchivoCadetes = "DatosCadetes.json";
+                ArchivoCadeteria = @"ArchivosJSON\DatosCadeteria.json";
+                ArchivoCadetes = @"ArchivosJSON\DatosCadetes.json";
 
                 archivos.LecturaDeArchivos(ArchivoCadeteria, ListaDatosCadeteria);
                 archivos.LecturaDeArchivos(ArchivoCadetes, ListaDatosCadetes);
