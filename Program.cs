@@ -107,6 +107,8 @@ while (!ControlMenu)
     switch (Menu)
     {
         case "1":
+            bool control = false;
+
             Console.Write($"\nIngrese los datos del pedido numero: {NumeroPedido}");
 
             Console.Write("\n\tObservaciones del pedido: ");
@@ -125,9 +127,13 @@ while (!ControlMenu)
             Console.Write("\n\tReferencias al domicilio: ");
             ReferenciaDireccion = Console.ReadLine();
 
-            cadeteria.AltaPedido(NumeroPedido, ObservacionPedido, NombreCliente, DireccionCliente, TelefonoCliente, ReferenciaDireccion);
+            while (!control)
+            {
+                cadeteria.AltaPedido(NumeroPedido, ObservacionPedido, NombreCliente, DireccionCliente, TelefonoCliente, ReferenciaDireccion);
+                control = cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
+            }
+
             NumeroPedido++;
-            cadeteria.AsignarCadeteAPedido(cadeteria.CadeteAleatorio(), NumeroPedido);
             break;
         case "2":
             string mostrarPedido;
@@ -136,10 +142,11 @@ while (!ControlMenu)
 
             if (int.TryParse(mostrarPedido, out int NumeroPedidoBuscado))
             {
-                if (!cadeteria.MostrarDatosPedido(NumeroPedidoBuscado))
-                {
-                    Console.WriteLine("El numero de pedido ingresado no existe");
-                }
+                Console.WriteLine(cadeteria.MostrarDatosPedido(NumeroPedidoBuscado));
+            }
+            else
+            {
+                Console.WriteLine("Debe ingresar un numero");
             }
             break;
         case "3":
@@ -203,7 +210,7 @@ while (!ControlMenu)
             }
             break;
         case "7":
-            Console.WriteLine(cadeteria.ObtenerPromedioEnvios());
+            Console.WriteLine("\nPromedio de envios por cadete: " + cadeteria.ObtenerPromedioEnvios());
 
             cadete = 10;
 
@@ -211,10 +218,10 @@ while (!ControlMenu)
 
             for (int i = 0; i < cadeteria.CantidadCadetes(); i++)
             {
-                Console.WriteLine("Cadete: " + cadeteria.NombreCadete(cadete));
+                Console.WriteLine("\nCadete: " + cadeteria.NombreCadete(cadete));
 
-                Console.WriteLine("Pedidos entregados: " + cadeteria.ObtenerCantidadPedidosEntregados(cadete));
-                Console.WriteLine("Total ganado: $" + cadeteria.ObtenerMontoGanado(cadete));
+                Console.WriteLine("\tPedidos entregados: " + cadeteria.ObtenerCantidadPedidosEntregados(cadete));
+                Console.WriteLine("\tTotal ganado: $" + cadeteria.ObtenerMontoGanado(cadete));
 
                 string[] DatosCadete = cadeteria.DatosCadete(i).Split(',');
 

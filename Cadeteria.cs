@@ -47,7 +47,7 @@ public class Cadeteria
         {
             return "El ID ingresado no es valido";
         }
-        
+
         return cadete.Nombre;
     }
 
@@ -93,7 +93,7 @@ public class Cadeteria
         //Consulta Linq y necesita una expresion lambda
         var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
 
-        if (PedidoBuscado == null && CadeteBuscado == null)
+        if (PedidoBuscado == null || CadeteBuscado == null)
         {
             return false;
         }
@@ -162,7 +162,7 @@ public class Cadeteria
             return -1;
         }
 
-        return JornalACobrar(IdCadete) / 500; 
+        return JornalACobrar(IdCadete) / 500;
     }
 
     public double ObtenerMontoGanado(int IdCadete)
@@ -170,7 +170,7 @@ public class Cadeteria
         var CadeteBuscado = cadetes.FirstOrDefault(cadete => cadete.Id == IdCadete);
         if (CadeteBuscado == null)
         {
-            return -1; 
+            return -1;
         }
 
         return JornalACobrar(IdCadete);
@@ -182,18 +182,16 @@ public class Cadeteria
     }
 
 
-    public bool MostrarDatosPedido(int NumeroPedidoBuscado)
+    public string MostrarDatosPedido(int NumeroPedidoBuscado)
     {
         var PedidoBuscado = pedidos.FirstOrDefault(pedido => pedido.Numero == NumeroPedidoBuscado);
 
         if (PedidoBuscado == null)
         {
-            return false;
+            return "Pedido no encontrado";
         }
 
-        PedidoBuscado.VerDatosCliente();
-
-        return true;
+        return PedidoBuscado.VerDatosCliente();
     }
 
     public string DatosCadete(int control)
@@ -202,7 +200,7 @@ public class Cadeteria
 
         if (cadetes[control] != null)
         {
-            DatosCadete = cadetes[control].Nombre +","+ cadetes[control].Direccion+","+ cadetes[control].Telefono;
+            DatosCadete = cadetes[control].Nombre + "," + cadetes[control].Direccion + "," + cadetes[control].Telefono;
         }
 
         return DatosCadete;
